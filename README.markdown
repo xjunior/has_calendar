@@ -4,14 +4,7 @@ has_calendar
 has_calendar is a view helper that creates a calendar using a table. You can 
 easily add events with any content.
 
-This plugin relies on the `cal` command, available on *nix systems. Instead 
-of calculating dates, I parse the output.
-
-NOTE: Only on Mac OS X (Unix?) the first day of week is Sunday; Linux (tested
-on Ubuntu) uses the argument `-m`, starting on Monday.
-
-Want this to work on Windows systems? Make sure you have a command `cal` on 
-your PATH that returns exactly the *nix output (haven't tested though).
+This plugin was inspered on has_calendar by fnando (github.com/fnando/has_calendar)
 
 Instalation
 -----------
@@ -47,15 +40,15 @@ You can specify a different attribute with the option `:field`:
 		<!-- do something -->
 	<% end %>
 
-By default, has_calendar will look for a date format called ':day_name' to use on the
-header of the calendar, you can change it using the :header_format option:
+By default, has_calendar will look for day names on rails default 'date.abbr_day_names' to use
+on the header of the calendar, you can change it using the :header_format option:
 
-        <%= calendar :header_format => :short_day_name %>
+        <%= calendar :header_format => 'date.one_letter_day_names'  %>
 
 You can also change the caption provided by has_calendar (that defaults to the
 :default format):
 
-        <%= calendar :header_format => :short_day_name, :caption_format => :month_year %>
+        <%= calendar :caption_format => :month_year %>
 
 Formatting the calendar
 -----------------------
@@ -109,8 +102,8 @@ TO-DO
 
 - Write some specs as soon as possible!
 
-Contributors
-------------
+Created by
+----------
 
 * Carlos Júnior (xjunior) <carlos@milk-it.net>
 
