@@ -50,50 +50,57 @@ You can also change the caption provided by has_calendar (that defaults to the
 
         <%= calendar :caption_format => :month_year %>
 
+If your :events is a counter of events (in the format 'events[day_number] = total of events') you
+can tell has_calendar about this (so it won't try to group the evetns by date:
+
+        <% calendar :events => events, :counter => true do |date, total| %>
+            <%= link_to_if(total > 0, "#{total} events", calendar_path(date)) %>
+        <% end %>
+
 Formatting the calendar
 -----------------------
 
 You can use this CSS to start:
 
-	#calendar {
+	.calendar {
 		border-collapse: collapse;
 		width: 100%;
 	}
 
-	#calendar td,
-	#calendar th {
+	.calendar td,
+	.calendar th {
 		color: #ccc;
 		font-family: "Lucida Grande",arial,helvetica,sans-serif;
 		font-size: 10px;
 		padding: 6px;
 	}
 
-	#calendar th {
+	.calendar th {
 		border: 1px solid #ccc;
 		background: #ccc;
 		color: #666;
 		text-align: left;
 	}
 
-	#calendar td {
+	.calendar td {
 		background: #f0f0f0;
 		border: 1px solid #ddd;
 	}
 
-	#calendar span {
+	.calendar span {
 		display: block;
 	}
 
-	#calendar td.events {
+	.calendar td.events {
 		background: #fff;
 	}
 
-	#calendar td.today {
+	.calendar td.today {
 		background: #ffc;
 		color: #666;
 	}
 
-	#calendar caption {
+	.calendar caption {
 	  display: none;
 	}
 
