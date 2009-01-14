@@ -9,19 +9,25 @@ module MilkIt
           :today => nil,
           :events => nil,
           :field => :created_at,
+          :counter => false,
           :header_format => 'date.abbr_day_names',
-          :caption_format => :default
+          :caption_format => :default,
+          :class => 'calendar'
         }.merge(options)
         date = Date.new(options[:year], options[:month], today.day)
       
         days = (date.beginning_of_month..date.end_of_month).to_a
         days.first.wday.times {|t| days.unshift(nil)}
         
-        # group all records if data is provided
-        records = options[:events].group_by{|e| e.send(options[:field]).to_date.day} if options[:events]
+        records = if options[:counter]
+          options[:events]
+        elsif options[:events]
+          # group all records
+          options[:events].group_by{|e| e.send(options[:field]).to_date.day}
+        end
       
         # building the calendar
-        table = content_tag(:table, :id => 'calendar') do
+        table = content_tag(:table, :class => options[:class]) do
           # first, get the header
           caption = content_tag(:caption, l(date, :format => options[:caption_format]))
 
@@ -45,7 +51,7 @@ module MilkIt
                     classes.push('weekend') if [0, 6].include?(day.wday)
                 
                     events = if block_given?
-                      classes.push('events') unless records[date.to_s(:number)].blank?
+                      classes.push('events') unless records[day.day].blank?
 
                       if options[:events]
                         capture(day, records[day.day], &block)
@@ -56,7 +62,7 @@ module MilkIt
   
                     day = options[:today] if options[:today] && date == today
                     events.nil?? content_tag(:span, day.day) : events
-                  end, classes.empty?? nil : {:class => col_classes.join(' ')})
+                  end, classes.empty?? nil : {:class => classes.join(' ')})
                 end
               end
             end
