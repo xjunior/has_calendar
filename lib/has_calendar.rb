@@ -51,7 +51,7 @@ module MilkIt
                     classes.push('weekend') if [0, 6].include?(day.wday)
                 
                     events = if block_given?
-                      classes.push('events') unless records[day.day].blank?
+                      classes.push('events') unless records.nil? || records[day.day].blank?
 
                       if options[:events]
                         capture(day, records[day.day], &block)
