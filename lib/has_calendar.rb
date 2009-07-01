@@ -4,8 +4,6 @@ module MilkIt
       def calendar(options={}, &block)
         today = Date.today
         options = {
-          :year => today.year,
-          :month => today.month,
           :today => nil,
           :events => nil,
           :field => :created_at,
@@ -14,7 +12,7 @@ module MilkIt
           :caption_format => :default,
           :class => 'calendar'
         }.merge(options)
-        date = Date.new(options[:year], options[:month], today.day)
+        date = Date.new(options[:year] || today.year, options[:month] || today.month, today.day)
       
         days = (date.beginning_of_month..date.end_of_month).to_a
         days.first.wday.times {|t| days.unshift(nil)}
