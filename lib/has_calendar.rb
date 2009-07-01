@@ -12,7 +12,7 @@ module MilkIt
           :caption_format => :default,
           :class => 'calendar'
         }.merge(options)
-        date = Date.new(options[:year] || today.year, options[:month] || today.month, today.day)
+        date = Date.new((options[:year] || today.year).to_i, (options[:month] || today.month).to_i, today.day)
       
         days = (date.beginning_of_month..date.end_of_month).to_a
         days.first.wday.times {|t| days.unshift(nil)}
